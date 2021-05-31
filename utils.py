@@ -1,5 +1,7 @@
 import numpy as np
 import string
+import gym
+#import circular_collect
 
 partition_set1 = ['x','0']
 partition_set2 = ['x','0','1','01']
@@ -82,7 +84,7 @@ def preprocess_state_layers(state, ident_agent, order_agents):
     (w,h,l) = np.shape(state)
     n_agents = int(l/2)
     rest_agents = list(set(range(n_agents))-set([ident_agent]+order_agents))
-    print(rest_agents)
+
 
     new_state = np.zeros([w,h,n_agents+1], dtype=int)
     new_state[:,:,0] = state[:,:,ident_agent + n_agents]
@@ -96,12 +98,29 @@ def preprocess_state_layers(state, ident_agent, order_agents):
     return new_state
 
 
+def preprocess_state_layers_for_agent(state, ident_agent, order_agents):
+    (w,h,l) = np.shape(state)
+    n_agents = int(l/2)
+    rest_agents = list(set(range(n_agents))-set(order_agents))
+
+    new_state = np.zeros([w,h,n_agents+1], dtype=int)
+    new_state[:,:,0] = state[:,:,ident_agent + n_agents]
+    new_state[:,:,1] = state[:,:,order_agents[0]]
+    for i,x in enumerate(order_agents[1:]):
+        new_state[:, :, i + 2] = state[:,:,x]
+
+    for i,x in enumerate(rest_agents):
+        new_state[:, :, len(order_agents) + i + 1] = state[:, :, x]
+
+    return new_state
+
+
 def transform_reward(ident_agent, list_rewards, coeff_agents = None, index_agents=None, normalise = 1.0):
     n_agents = len(list_rewards)
     if index_agents is not None:
         assert coeff_agents is None
         coeff_agents = [1 if (i in index_agents or i==ident_agent) else 0 for i in range(n_agents)]
-        print("coeffs", coeff_agents)
+
 
     return np.dot(list_rewards, coeff_agents)*normalise
 
@@ -118,3 +137,13 @@ def name_generic_model_list(n_agents, ext = '.pth'):
 
     return list_output
 
+
+def prob_matrix_to_coop_matrix(matrix):
+    return np.array(matrix)
+
+
+def replicate_env(name_env, env, seed):
+    new_env = gym.make(name_env)
+    new_env.reset()
+    new_env.replicate(env, seed)
+    return new_env

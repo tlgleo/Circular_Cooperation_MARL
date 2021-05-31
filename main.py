@@ -10,7 +10,7 @@ env = gym.make(name_env)
 env.reset()
 nb_agents = len(env.agents)
 auto = 0
-max_steps = 0
+max_steps = 10000
 
 print(env.observation_space)
 print(env.action_space)
@@ -31,13 +31,19 @@ print(np.shape(s))
 a = agentRLTFT.act_cooperate_with(s,[0,2,3])
 print(a)
 
-env.render(mode='human', highlight=False)
-time.sleep(200)
+env.render(mode='human', highlight=False, save_fig = True)
+time.sleep(2)
+
+
+print('debut')
 
 for t in range(max_steps):
-    env.render(mode='human', highlight=False)
+    print(t)
+    fig_name = './render/1/'+str(t)+'.png'
+    #print(env.balls_in_room)
+    env.render(mode='human', highlight=False, save_fig = True, fig_name = fig_name)
     ac = [env.action_space.sample() for _ in range(nb_agents)]
-
+    #ac = [4]*4
     obs, r, done, _ = env.step(ac)
 
     o1 = obs[0]
@@ -56,6 +62,10 @@ for t in range(max_steps):
     print(r)
     """
 
-    print(r)
-    time.sleep(0.1)
+    #print('balls_close_to_agents', env.balls_close_to_agents)
+    #print('balls_on_grid', env.balls_on_grid)
 
+    print(r)
+    time.sleep(0)
+
+print('finish')

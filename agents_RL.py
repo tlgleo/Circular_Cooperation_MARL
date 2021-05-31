@@ -16,7 +16,7 @@ Implementation adpated from Udacity
 class QNetwork(nn.Module):
     """Actor (Policy) Model."""
 
-    def __init__(self, state_size, action_size, seed, fc1_units=256, fc2_units=64):
+    def __init__(self, state_size, action_size, seed, fc1_units=100, fc2_units=100, fc3_units = 100):
         """Initialize parameters and build model.
         Params
         ======
@@ -41,14 +41,41 @@ class QNetwork(nn.Module):
 
 
 
-BUFFER_SIZE = int(1e5)  # replay buffer size
-BATCH_SIZE = 64  # minibatch size
-GAMMA = 0.99  # discount factor
-TAU = 1e-3  # for soft update of target parameters
-LR = 5e-4  # learning rate
+BUFFER_SIZE = int(1e3)  # replay buffer size
+BATCH_SIZE = 200  # minibatch size
+GAMMA = 0.9  # discount factor
+TAU = 1e-2  # for soft update of target parameters
+LR = 1e-3  # learning rate
 UPDATE_EVERY = 4  # how often to update the network
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+
+
+class Agent_DQN:
+    def __init__(self, state_size = 80, action_size = 5,
+                 layer_size_1 = 150, layer_size_2 = 100,
+                 model_weights = None):
+        self.state_size = state_size
+        self.action_size = action_size
+        self.model = torch.nn.Sequential(
+                        torch.nn.Linear(state_size, layer_size_1),
+                        torch.nn.ReLU(),
+                        torch.nn.Linear(layer_size_1, layer_size_2),
+                        torch.nn.ReLU(),
+                        torch.nn.Linear(layer_size_2, action_size)
+                        )
+
+        if model_weights is not None:
+            self.model.load_state_dict(torch.load(model_weights))
+
+    def q_values(self, state):
+        state = torch.from_numpy(state).float()
+        return self.model(state).data.numpy()
+
+    def act(self, state):
+        q_val = self.q_values(state)
+        return np.argmax(q_val)
 
 
 class Agent():
@@ -81,6 +108,10 @@ class Agent():
         # if pre-trained model is available :
         if model_weights is not None:
             self.qnetwork_local.load_state_dict(torch.load(model_weights))
+
+
+    def preprocess_state(self, state):
+        self.preprocess_state(state)
 
     def step(self, state, action, reward, next_state, done):
         # Save experience in replay memory
@@ -199,6 +230,6 @@ class ReplayBuffer:
         return len(self.memory)
 
 
-def get_agent(state_size, action_size, model_name, agent_name = 'agent_name'):
+def get_agent(state_size, action_size, model_name= None, agent_name = 'agent_name'):
     agent = Agent(state_size, action_size, seed=0, model_weights = model_name, agent_name = agent_name)
     return agent

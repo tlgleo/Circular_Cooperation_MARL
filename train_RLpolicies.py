@@ -76,6 +76,7 @@ def learn_all_models_discrete_generic_selfplay(env, state_size, action_size, pat
 
 
 
+def learn_discrete_coop_stationnary(env, state_size, action_size, path_policy_model, coop_vector = [1,0,0,0]):
 
 
 

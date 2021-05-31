@@ -14,6 +14,11 @@ a0 = Agent_TFT_Beta(0, 'agent0', n_agents=4, max_coop_matrix=max_coop_graph1)
 
 a0 = Agent_TFT_Gamma(0, 'agent1', n_agents=4, max_coop_matrix=max_coop_graph1)
 
+
+tra = grTFT.Agent_Traitor
+
+a1 = tra(0,'traitor', max_coop_matrix=max_coop_graph1, t_traitor=30)
+
 coop_mat = np.zeros([4,4])
 coop_mat[1,2] = 1.0
 coop_mat[2,3] = 1.0
@@ -21,10 +26,11 @@ coop_mat[3,0] = 1.0
 
 step_t = 0
 
-for t in range(8):
-    output = a0.act(coop_mat, t)
+for t in range(40):
+    print('step ', t)
+    output = a1.act(coop_mat, t)
     print("current inner graph")
-    print(a0.current_coop_matrix)
+    print(a1.current_coop_matrix)
     print('output')
     print(output)
     print()
@@ -36,7 +42,7 @@ coop_mat[3, 0] = 1.0
 
 print("TRAITOR")
 
-for t in range(8):
+for t in range(0):
     output = a0.act(coop_mat, t)
     print('inner source')
     print(a0.current_source)
