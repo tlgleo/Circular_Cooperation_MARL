@@ -2,12 +2,32 @@
 
 ## Requirements
 - Python: requirements.txt
-- Other: ffmpeg
+- graphbasedTFT and circular_collect (see Installation)
+- Other: ffmpeg (for video rendering)
 
-## Installation of packages
-Our algorithm needs another package from previous work (under review), the graph-based Tit-for-Tat. 
-To install it:
+## Installation
 
+To create a virtual environment:
+
+* Download files on your machine
+  * git clone https://github.com/submission-conf/neurips_tmp.git
+
+* Go to the main directory
+  * cd neurips_tmp
+
+* Create a virtual environment
+  * python3 -m venv RL_circular_cooperation
+
+* Activate virtual environment
+  * source RL_circular_cooperation/bin/activate
+
+* Load the python librairies needed from the requirements file
+  * python -m pip install --upgrade pip
+  * python -m pip install --upgrade setuptools
+  * python -m pip install -r requirements.txt
+
+
+Install our package graphbasedTFT from previous work (under review), the graph-based Tit-for-Tat. 
 ```
 git clone https://github.com/submission-conf/graphbasedTFT.git
 cd graphbasedTFT
@@ -15,12 +35,10 @@ pip3 install -e .
 cd ..
 ```
 
-Moreover, our algorithm is run on games we design. In particular the Circular Collect.
-To install it:
-
+Install our Gym circular game, the package circular_collect:
 ```
 git clone https://github.com/submission-conf/circular_games.git
-cd circular_collect/circular_collect
+cd circular_games/circular_collect
 pip3 install -e .
 cd ../..
 ```
