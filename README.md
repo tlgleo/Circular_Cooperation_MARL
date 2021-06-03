@@ -9,39 +9,41 @@
 
 To create a virtual environment:
 
-* Download files on your machine
-  `git clone https://github.com/submission-conf/neurips_tmp.git`
+* Download files on your machine and go to the main directory
+  ```
+  git clone https://github.com/submission-conf/neurips_tmp.git
+  cd neurips_tmp
+  ```
 
-* Go to the main directory
-  * cd neurips_tmp
-
-* Create a virtual environment
-  * python3 -m venv RL_circular_cooperation
-
-* Activate virtual environment
-  * source RL_circular_cooperation/bin/activate
+* Create a virtual environment and activate it
+  ```
+  python3 -m venv RL_circular_cooperation
+  source RL_circular_cooperation/bin/activate
+  ```
 
 * Load the python librairies needed from the requirements file
-  * python -m pip install --upgrade pip
-  * python -m pip install --upgrade setuptools
-  * python -m pip install -r requirements.txt
+  ```
+  python -m pip install --upgrade pip
+  python -m pip install --upgrade setuptools
+  python -m pip install -r requirements.txt
+  ```
 
 
-Install our package graphbasedTFT from previous work (under review), the graph-based Tit-for-Tat. 
-```
-git clone https://github.com/submission-conf/graphbasedTFT.git
-cd graphbasedTFT
-pip3 install -e .
-cd ..
-```
+* Install our package graphbasedTFT from previous work (under review), the graph-based Tit-for-Tat. 
+  ```
+  git clone https://github.com/submission-conf/graphbasedTFT.git
+  cd graphbasedTFT
+  pip3 install -e .
+  cd ..
+  ```
 
-Install our Gym circular game, the package circular_collect:
-```
-git clone https://github.com/submission-conf/circular_games.git
-cd circular_games/circular_collect
-pip3 install -e .
-cd ../..
-```
+* Install our Gym circular game, the package circular_collect:
+  ```
+  git clone https://github.com/submission-conf/circular_games.git
+  cd circular_games/circular_collect
+  pip3 install -e .
+  cd ../..
+  ```
 
 
 ## Lauching a game
