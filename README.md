@@ -12,6 +12,7 @@ To install it:
 git clone https://github.com/submission-conf/graphbasedTFT.git
 cd graphbasedTFT
 pip3 install -e .
+cd ..
 ```
 
 Moreover, our algorithm is run on games we design. In particular the Circular Collect.
@@ -21,6 +22,7 @@ To install it:
 git clone https://github.com/submission-conf/circular_games.git
 cd circular_collect/circular_collect
 pip3 install -e .
+cd ..
 ```
 
 
