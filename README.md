@@ -10,7 +10,7 @@
 To create a virtual environment:
 
 * Download files on your machine
-  * git clone https://github.com/submission-conf/neurips_tmp.git
+  `git clone https://github.com/submission-conf/neurips_tmp.git`
 
 * Go to the main directory
   * cd neurips_tmp
