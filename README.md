@@ -22,7 +22,7 @@ To install it:
 git clone https://github.com/submission-conf/circular_games.git
 cd circular_collect/circular_collect
 pip3 install -e .
-cd ..
+cd ../..
 ```
 
 
