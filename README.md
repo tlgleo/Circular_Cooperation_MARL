@@ -31,7 +31,7 @@ To create a virtual environment:
 
 * Install our package graphbasedTFT from previous work (under review), the graph-based Tit-for-Tat. 
   ```
-  git clone https://github.com/submission-conf/graphbasedTFT.git
+  git clone https://github.com/tlgleo/graphbasedTFT.git
   cd graphbasedTFT
   pip3 install -e .
   cd ..
@@ -39,7 +39,7 @@ To create a virtual environment:
 
 * Install our Gym circular game, the package circular_collect:
   ```
-  git clone https://github.com/submission-conf/circular_games.git
+  git clone https://github.com/tlgleo/circular_games.git
   cd circular_games/circular_collect
   pip3 install -e .
   cd ../..
@@ -88,7 +88,7 @@ In the header of the script, parameters can be modified for the selection of par
 
 
 ## Details on games
-The Bilateral and Circular games we use in this repo are from our [Circular Collect Game](https://github.com/submission-conf/circular_games).
+The Bilateral and Circular games we use in this repo are from our [Circular Collect Game](https://github.com/tlgleo/circular_games).
 
 ![collect games](games_collect.png)
 
