@@ -11,8 +11,8 @@ To create a virtual environment:
 
 * Download files on your machine and go to the main directory
   ```
-  git clone https://github.com/submission-conf/neurips_cooperativeAI.git
-  cd neurips_cooperativeAI
+  git clone https://github.com/tlgleo/Circular_Cooperation_MARL.git
+  cd Circular_Cooperation_MARL
   ```
 
 * Create a virtual environment and activate it
