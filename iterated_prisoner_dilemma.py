@@ -24,8 +24,3 @@ def N_player_prisoner_dilemma(coop_matrix):
 ex1 = np.array([[0,1,1,0],[0,0,1,1],[1,0,0,1],[1,1,0,0]])*1.0
 ex2 = np.array([[0,1,0,0],[0,0,1,0],[0,0,0,1],[1,0,0,0]])*1.0
 ex3 = np.array([[0,0,0,0],[0,0,1,0],[0,0,0,1],[1,0,0,0]])*1.0
-
-
-print(N_player_prisoner_dilemma(ex1))
-print(N_player_prisoner_dilemma(ex2))
-print(N_player_prisoner_dilemma(ex3))

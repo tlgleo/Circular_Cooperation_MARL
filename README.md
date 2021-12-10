@@ -1,8 +1,8 @@
-# Circular Social Dilemma with Reinforcement Learning
+# Asymmetric and Circular Sequential Social Dilemmas with Reinforcement Learning and Graph-based Tit-for-Tat
 
 ## Requirements
 - Python: requirements.txt
-- graphbasedTFT and circular_collect (see Installation)
+- graphbasedTFT and circular_collect (see Installation below)
 - Other: ffmpeg (for video rendering)
 
 ## Installation
@@ -11,8 +11,8 @@ To create a virtual environment:
 
 * Download files on your machine and go to the main directory
   ```
-  git clone https://github.com/submission-conf/neurips_tmp.git
-  cd neurips_tmp
+  git clone https://github.com/submission-conf/neurips_cooperativeAI.git
+  cd neurips_cooperativeAI
   ```
 
 * Create a virtual environment and activate it
@@ -46,20 +46,49 @@ To create a virtual environment:
   ```
 
 
-## Lauching a game
-Some simulations of games with our algorithm are available in the script `main_demo.py`.
+## Simulation of games
+In the script `main_demo.py`, it is possible to run some games with agents using the grTFTrl algorithm.
 Rendering videos are possible if ffmpeg is installed.
 
-### Customized simulation TODO
-Select `choice_example = 0` and modify below:
+### Preset simulations
+In the header of the script, `choice_demo = ` can be set to one index for preset simulations.
+Here are the proposed simulations: 
+1. graph-based TFT in Circular Game
 
-### Presets simulations TODO
-Select the index of example in `choice_example = `
-Here are the proposed simulations:
-1. 
 
-## Evaluation TODO
-The script `main_evaluation.py` computes some metrics in some games
+3. graph-based TFT in Bilateral Game 
+4. vanilla TFT in Circular Game   
+5. vanilla TFT in Bilateral Game
+6. graphTFT + 1 Traitor (defects for t in [30,50] in Circular Game   
+7. graphTFT + 1 Traitor (defects for t in [30,50] in Bilateral Game
+8. graphTFT in a Dynamic Game 
 
-1. 
-2.
+## Evaluation of parameters
+The script `main_eval.py` computes some metrics (mean/standard deviation, because of the high stochasticity of the games):
+- Efficiency
+- Incentive-Compatibility
+- Safety
+
+
+In the header of the script, parameters can be modified for the selection of parameters for evaluation:
+* `choice_env`:
+    - `'C'` (circular)
+    - `'B'` (bilateral)
+* `choice_tft`:
+    - `'gr'` (graph-based Tit-for-Tat)
+    - `'va'` (vanilla Tit-for-Tat)
+    - `'eg'` (egoist)
+    - `'ni'` (nice)
+* `parameters_TFT`:
+    - `alpha`: inertia
+    - `r0`: coefficient of incentive (initial)
+    - `beta`: coefficient to adapt the incentive r
+    - `gamma`: coefficient of stochasticity (incentive with proba gamma)
+
+
+
+## Details on games
+The Bilateral and Circular games we use in this repo are from our [Circular Collect Game](https://github.com/submission-conf/circular_games).
+
+![collect games](games_collect.png)
+

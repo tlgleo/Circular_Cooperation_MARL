@@ -5,8 +5,6 @@ from graphbasedTFT import *
 from detection_functions import *
 
 
-
-
 IDENT_TO_COORD = [(0,0),(1,0),(1,1),(0,1)]
 
 class Agent_RLTFT:
@@ -17,7 +15,7 @@ class Agent_RLTFT:
 
     def __init__(self, ident, agent_grTFT, agent_RL,
                  state_size, action_size, n_agents=4, env_state_size = (11,11),
-                 path_model = './models/3/'):
+                 path_model = './models/DQN_simple/'):
 
         self.ident = ident
         self.n_agents = n_agents
@@ -54,10 +52,6 @@ class Agent_RLTFT:
         self.step_t = 0
 
 
-        # 1. fill RL_policies according to self.discrete_coop (1 or 2^(nA-1))
-        # 2. Init AgentTFT
-        # 3.
-
     def reset(self):
         # reset the Tit-for-Tat algorithm
         self.agent_grTFT.reset()
@@ -69,38 +63,12 @@ class Agent_RLTFT:
         self.k_steps_dect_coop_max = 5  # for the (discrete) detection of cooperation
         self.k_steps_dect_coop_max = 0  # for the (discrete) detection of cooperation
 
-    def get_policies(self):
-        """
-        Fill with models trained via-selfplay the list of dict self.RL_policies
-        for each agent:
-        if self.discrete_coop: 2^(N_agents-1) per agent -> agent 0: x, 1, 2, 3, 12, 23, 13, 123
-        else: only one model per agent taking as input the vector of cooperation Ct
-        """
-
-
-        for i in range(self.n_agents):
-            if not self.discrete_coop:
-                print("CONTINUOUS COOPERATION")
-                # 2^(n_agents-1) models per agent according to the partition of agents in the cooperation
-
-                # state size : addition of the cooperation vector of dim n_agents
-                state_size = self.state_size + self.n_agents
-                action_size = self.action_size
-
-                for i in range(self.n_agents):
-                    self.RL_policies.append([])
-                    model_name = create_name_model(i, False)
-                    self.RL_policies[-1][0](get_agent(state_size, action_size, model_name, model_name[:-4]))
-
-
-            for j in range(self.n_agents):
-                if j != j:
-                    pass
-                    # put the partition
-                    # AgentRL(state_size, action_size, model = '')
-            else:
-                # only one model per agent with an observation state different (+ cooperation vector)
-                pass
+    def set_parameters_TFT(self, parameters_TFT):
+        (alpha, r0, beta, gamma) = parameters_TFT
+        #alpha_inertia = 0.6, r_incentive = 0.3, beta_adaptive = 0.6, gamma_proba = 0.1
+        if hasattr(self.agent_grTFT, 'alpha_inertia'):
+            print('has alpha')
+            self.agent_grTFT.alpha_inertia = alpha
 
     def preprocess_state_fct(self, ident, list_agents):
         def fct(state):
@@ -228,11 +196,3 @@ class Agent_RLTFT:
         state = fct_obs_preprocess(state)
         return self.agent_RL.act(state)
 
-
-
-ident = 2
-agent_grTFT = []
-state_size = 80
-action_size = 5
-
-#agentRLTFT = Agent_RLTFT(ident, agent_grTFT, state_size, action_size, n_agents=4, env_state_size = (11,11))

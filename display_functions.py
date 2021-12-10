@@ -397,7 +397,6 @@ def generate_complete_display(coop_max_matrix, coop_rates_matrix, curves, output
         detected_potential = coop_max_matrix
 
     current_payoffs = [c[-1] for c in curves]
-    print("FIGSIZE", fig_size)
     fig, axs = plt.subplots(2, 3, figsize=(25,10))
     (n,_) = np.shape(coop_rates_matrix)
     list_rates = [1.0]*n
@@ -423,7 +422,7 @@ def generate_complete_display(coop_max_matrix, coop_rates_matrix, curves, output
     axs[1,0].set_title('Evolution payoffs sum', fontsize=15)
     axs[1,0].set_ylim(limits_y)
 
-
+    #plt.show()
     fig.savefig(output_name, transparent=False)
     plt.clf()
     plt.close()

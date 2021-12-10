@@ -16,13 +16,15 @@ def run_game(env, list_agents=[], t_max=100,
              steps_change_max_coop = [],
              max_coop_matrix_change = [],
              show_sum = True,
-             given_detection = False,
+             given_detection = True,
              given_potential = True,
              debug_rewards_IPD = False,
              render_env = False,
              complete_display = True,
              dist_potential = False,
-             dist_current_coop = False
+             dist_current_coop = False,
+             seed_game = 12345,
+             print_step = False
              ):
 
 
@@ -54,15 +56,18 @@ def run_game(env, list_agents=[], t_max=100,
             os.mkdir(path_render_env)
     # CREATION of Paths for render - END
 
-    states = env.reset()
+    states = env.reset(seed=seed_game)
     prev_states = copy.deepcopy(states)
     j_change_max_coop = 0
     prev_actions = [0,0,0,0]
 
     for t in range(t_max):
 
+        if print_step:
+            print('Step ' + str(t)+'/'+str(t_max))
+
+        # Dynamically modify the maximal cooperation graph
         if t in steps_change_max_coop:
-            # change the maximal potential cooperation graph
             env.prob_matrix = max_coop_matrix_change[j_change_max_coop]
             coop_max_matrix = prob_matrix_to_coop_matrix(max_coop_matrix_change[j_change_max_coop])
             j_change_max_coop += 1
@@ -85,21 +90,6 @@ def run_game(env, list_agents=[], t_max=100,
             actions.append(action)
             coop_graph[i, :] = a.current_reaction_coop
 
-        """
-        print()
-        print("0 -> 0", np.max(list_agents[0].get_Q_values(state, 1, [0])) )
-        print("0 -> 1", np.max(list_agents[0].get_Q_values(state, 1, [1])) )
-        print("0 -> 2", np.max(list_agents[0].get_Q_values(state, 1, [2])) )
-        print("0 -> 3", np.max(list_agents[0].get_Q_values(state, 1, [3])) )
-        
-
-        print("0 -> 0", list_agents[0].get_Q_values(state, 1, [0]))
-        print("0 -> 1", list_agents[0].get_Q_values(state, 1, [1]))
-        print("0 -> 2", list_agents[0].get_Q_values(state, 1, [2]))
-        print("0 -> 3", list_agents[0].get_Q_values(state, 1, [3]))
-        """
-        #print("V values -> ")
-        #print(list_agents[0].compute_V_values(states[0]))
 
         coop_graph = np.minimum(coop_graph, prob_matrix_to_coop_matrix(env.prob_matrix))
 
@@ -112,11 +102,9 @@ def run_game(env, list_agents=[], t_max=100,
         states, rewards, dones, _ = env.step(actions)
 
         detected_potential = list_agents[0].max_coop_graph
-        #print(detected_potential)
 
         detected_cooperation = list_agents[0].detection_coop_graph
-        #print("coop detect")
-        #print(detected_cooperation)
+
 
 
         ##### CREATION of payoffs curves (sum or smoothed mean)  #############
@@ -163,14 +151,7 @@ def run_game(env, list_agents=[], t_max=100,
 
         dist_euc_potential = math.sqrt(euclidean(detected_potential.flatten(), coop_max_matrix.flatten()))
         distances_current_coop.append(np.random.randint(2,6))
-        """
-        print('max coop true = ')
-        print(coop_max_matrix)
-        print("potential detected")
-        print(detected_potential)
-        distances_potential_coop.append(dist_euc_potential)
-        print("dist = ", dist_euc_potential)
-        """
+
     # CREATION of video (with ffmpeg) #############
     if render and video_render:
 
